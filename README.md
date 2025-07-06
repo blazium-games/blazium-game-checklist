@@ -6,6 +6,7 @@ A checklist of things needed to do when releasing a game. Copy paste the followi
 - [ ] [Google Play Page](#google-play-page)
 - [ ] [App Store Pages](#app-store-pages)
 - [ ] [Discord Page](#discord-page)
+- [ ] [POGR Page](#pogr-page)
 - [ ] [Main Website](#main-website)
 
 ## Steam Page
@@ -45,6 +46,15 @@ A checklist of things needed to do when releasing a game. Copy paste the followi
 
 1. Create Application.
 2. Update all settings, descriptions and images.
+
+## POGR Page
+
+[POGR Developer Page](https://pogr.io)
+
+1. Create Application
+2. Copy Client and Build ID in the game
+3. Create Widgets
+4. Update Application Page
 
 ## Main Website
 
