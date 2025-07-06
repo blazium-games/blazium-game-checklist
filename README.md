@@ -7,6 +7,7 @@ A checklist of things needed to do when releasing a game. Copy paste the followi
 - [ ] [App Store Pages](#app-store-pages)
 - [ ] [Discord Page](#discord-page)
 - [ ] [POGR Page](#pogr-page)
+- [ ] [Article](#article)
 - [ ] [Main Website](#main-website)
 
 ## Steam Page
@@ -55,6 +56,14 @@ A checklist of things needed to do when releasing a game. Copy paste the followi
 2. Copy Client and Build ID in the game
 3. Create Widgets
 4. Update Application Page
+
+## Article
+
+Draft an article about the game, with the following structure:
+
+- Title
+- Summary
+- Content (at least 3-4 images/gifs): Structure it into 3-4 chapters also.
 
 ## Main Website
 
