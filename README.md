@@ -7,6 +7,7 @@ NOTE: For all pages, also add where possible either videos or gif files (eg. ste
 1. [Stores](#1-stores)
 2. [Documentation](#2-documentation)
 3. [Localization](#3-localization)
+4. [Image Sizes](#4-image-sizes)
 
 ## 1. Stores
 
@@ -91,3 +92,40 @@ Make sure the game and shared menus are localized.
 
 1. Update the main website with info and images about the game.
 
+## 4. Image Sizes
+
+
+### Apple
+
+![iphone](iphone.png)
+
+![ipad](ipad.png)
+
+![mac](mac.png)
+
+### Discord
+
+![discord_icon](discord_icon.png)
+1024 or 512
+
+![discord_rich_presence](discord_rich_presence.png)
+
+![discord_art_assets](discord_art_assets.png)
+
+![discord_video_preview](discord_video_preview.png)
+
+### Google
+
+![play_store_icon](play_store_icon.png)
+
+![play_store_feature](play_store_feature.png)
+
+![phone_screenshots](phone_screenshots.png)
+
+![tablet_screenshots1](tablet_screenshots1.png)
+
+![tablet_screenshots2](tablet_screenshots2.png)
+
+![steam_headers](steam_headers.png)
+
+![steam_headers2](steam_headers2.png)
