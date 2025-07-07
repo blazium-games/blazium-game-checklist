@@ -126,6 +126,12 @@ Make sure the game and shared menus are localized.
 
 ![tablet_screenshots2](tablet_screenshots2.png)
 
+### Steam
+
 ![steam_headers](steam_headers.png)
 
 ![steam_headers2](steam_headers2.png)
+
+### Article
+
+![article_image](article_image.png)
