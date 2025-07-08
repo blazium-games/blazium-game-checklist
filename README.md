@@ -8,6 +8,7 @@ NOTE: For all pages, also add where possible either videos or gif files (eg. ste
 2. [Documentation](#2-documentation)
 3. [Localization](#3-localization)
 4. [Image Sizes](#4-image-sizes)
+5. [Languages Supported](#5-languages-supported)
 
 ## 1. Stores
 
@@ -151,3 +152,40 @@ Make sure the game and shared menus are localized.
 ### Article
 
 ![article_image](article_image.png)
+
+## 5. Languages Supported
+
+Our games support all the main languages that steam supports:
+
+Language Name| Native Name| Short Name| Code
+-|-|-|-
+Arabic | العربية | arabic | ar
+Bulgarian | български език | bulgarian | bg
+Chinese (Simplified) | 简体中文 | schinese | zh-CN
+Chinese (Traditional) | 繁體中文 | tchinese | zh-TW
+Czech | čeština | czech | cs
+Danish | Dansk | danish | da
+Dutch | Nederlands | dutch | nl
+English | English | english | en
+Finnish | Suomi | finnish | fi
+French | Français | french | fr
+German | Deutsch | german | de
+Greek | Ελληνικά | greek | el
+Hungarian | Magyar | hungarian | hu
+Indonesian | Bahasa Indonesia | indonesian | id
+Italian | Italiano | italian | it
+Japanese | 日本語 | japanese | ja
+Korean | 한국어 | koreana | ko
+Norwegian | Norsk | norwegian | no
+Polish | Polski | polish | pl
+Portuguese | Português | portuguese | pt
+Portuguese-Brazil | Português-Brasil | brazilian | pt-BR
+Romanian | Română | romanian | ro
+Russian | Русский | russian | ru
+Spanish-Spain | Español-España | spanish | es
+Spanish-Latin America | Español-Latinoamérica | latam | es-419
+Swedish | Svenska | swedish | sv
+Thai | ไทย | thai | th
+Turkish | Türkçe | turkish | tr
+Ukrainian | Українська | ukrainian | uk
+Vietnamese | Tiếng Việt | vietnamese | vi
