@@ -128,9 +128,19 @@ Make sure the game and shared menus are localized.
 
 ### Steam
 
+- Store assets
+
+![steam_requirements](steam_requirements.png)
+
 ![steam_headers](steam_headers.png)
 
 ![steam_headers2](steam_headers2.png)
+
+- Screenshots
+
+![steam_screenshots](steam_screenshots.png)
+
+- Library Assets
 
 ### Article
 
