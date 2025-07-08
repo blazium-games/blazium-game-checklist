@@ -142,6 +142,12 @@ Make sure the game and shared menus are localized.
 
 - Library Assets
 
+![steam_library_guidelines](steam_library_guidelines.png)
+
+![steam_library_1](steam_library_1.png)
+
+![steam_library_2](steam_library_2.png)
+
 ### Article
 
 ![article_image](article_image.png)
