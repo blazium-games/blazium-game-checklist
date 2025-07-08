@@ -155,7 +155,7 @@ Make sure the game and shared menus are localized.
 
 ## 5. Languages Supported
 
-Our games support all the main languages that steam supports:
+Our games support all the [Languages Supported on Steam](https://partner.steamgames.com/doc/store/localization/languages):
 
 Language Name| Native Name| Short Name| Code
 -|-|-|-
