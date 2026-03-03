@@ -35,10 +35,11 @@ Update all stores with the game.
 [Google Developer URL](https://developer.android.com/distribute/console)
 
 1. Create App Page.
-2. Manually create an internal release first time (download latest build and upload it using play developer website): Test and Release -> Testing -> Internal Testing
-3. Update with info and images about the game.
-4. Create new Internal Release and test it.
-4. Publish the release to Production.
+2. Set up Android signing (keystore, password, alias). See [scripts/Build-Android.md](scripts/Build-Android.md) for a step-by-step guide, or [scripts/README.md](scripts/README.md) for utilities and CI/CD setup.
+3. Manually create an internal release first time (build an AAB, then upload via Play Console): Test and Release → Testing → Internal Testing.
+4. Update with info and images about the game.
+5. Create new Internal Release and test it.
+6. Publish the release to Production.
 
 ### App Store Pages
 
