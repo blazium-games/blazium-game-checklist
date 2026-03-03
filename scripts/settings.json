@@ -1,0 +1,23 @@
+{
+  "signing_dir": ".android-signing",
+  "keystore_filename": "release.keystore",
+  "credentials_filename": "credentials.txt",
+  "key_alias": "release",
+  "key_algorithm": "RSA",
+  "key_size": 2048,
+  "validity_days": 10000,
+  "password_length": 40,
+  "certificate_dname": {
+    "CN": "My App",
+    "OU": "Development",
+    "O": "My Company",
+    "L": "City",
+    "ST": "State",
+    "C": "US"
+  },
+  "export": {
+    "encrypted_key_filename": "encrypted_private_key.zip",
+    "encryption_key_filename": "encryption_public_key.pem",
+    "pepk_filename": "pepk.jar"
+  }
+}

@@ -20,10 +20,10 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-$ProjectRoot = Split-Path -Parent $PSScriptRoot
-$BlaziumDir = Join-Path $ProjectRoot '.blazium'
-if (-not $KeystorePath) { $KeystorePath = Join-Path $BlaziumDir 'blazium.keystore' }
-$CredentialsPath = Join-Path $BlaziumDir 'credentials.txt'
+. (Join-Path $PSScriptRoot 'AndroidSigningSettings.ps1')
+$settings = Get-AndroidSigningSettings
+if (-not $KeystorePath) { $KeystorePath = $settings.KeystorePath }
+$CredentialsPath = $settings.CredentialsPath
 
 . (Join-Path $PSScriptRoot 'AndroidSigningHelpers.ps1')
 
@@ -53,6 +53,6 @@ if ($ExpectedSha1) {
         Write-Host "`n  MATCHES expected (Google Play will accept this keystore)." -ForegroundColor Green
     } else {
         Write-Host "`n  DOES NOT MATCH expected: $ExpectedSha1" -ForegroundColor Red
-        Write-Host "  Replace .blazium/blazium.keystore with the original keystore used for the first Play upload." -ForegroundColor Yellow
+        Write-Host "  Replace the keystore at $KeystorePath with the original used for the first Play upload." -ForegroundColor Yellow
     }
 }

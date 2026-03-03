@@ -1,1 +1,5 @@
 .DS_Store
+
+# Android signing (keystore, credentials - never commit)
+.android-signing/
+.blazium/

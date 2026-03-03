@@ -8,11 +8,11 @@
     zip to .blazium/. Reads password and alias from .blazium/credentials.txt by
     default; prompts interactively only if credentials are missing.
 .PARAMETER KeystorePath
-    Path to the keystore file. Default: .blazium/blazium.keystore
+    Path to the keystore file. Default: from scripts/settings.json
 .PARAMETER OutputPath
-    Path for the output zip file. Default: .blazium/encrypted_private_key.zip
+    Path for the output zip file. Default: from scripts/settings.json
 .PARAMETER EncryptionKeyPath
-    Path to the encryption public key PEM file. Default: .blazium/encryption_public_key.pem
+    Path to the encryption public key PEM file. Default: from scripts/settings.json
 .PARAMETER PromptForPassword
     Ignore credentials.txt and prompt for keystore/key passwords interactively.
 .EXAMPLE
@@ -31,18 +31,17 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-# Resolve project root (parent of scripts/)
-$ProjectRoot = Split-Path -Parent $PSScriptRoot
-$BlaziumDir = Join-Path $ProjectRoot '.blazium'
+. (Join-Path $PSScriptRoot 'AndroidSigningSettings.ps1')
+$settings = Get-AndroidSigningSettings
 
-# Default paths
-if (-not $KeystorePath) { $KeystorePath = Join-Path $BlaziumDir 'blazium.keystore' }
-if (-not $OutputPath) { $OutputPath = Join-Path $BlaziumDir 'encrypted_private_key.zip' }
-if (-not $EncryptionKeyPath) { $EncryptionKeyPath = Join-Path $BlaziumDir 'encryption_public_key.pem' }
+$SigningDir = $settings.SigningDirPath
+if (-not $KeystorePath) { $KeystorePath = $settings.KeystorePath }
+if (-not $OutputPath) { $OutputPath = Join-Path $SigningDir $settings.EncryptedKeyFilename }
+if (-not $EncryptionKeyPath) { $EncryptionKeyPath = Join-Path $SigningDir $settings.EncryptionKeyFilename }
 
 $PepkUrl = 'https://www.gstatic.com/play-apps-publisher-rapid/signing-tool/prod/pepk.jar'
-$PepkPath = Join-Path $BlaziumDir 'pepk.jar'
-$CredentialsPath = Join-Path $BlaziumDir 'credentials.txt'
+$PepkPath = Join-Path $SigningDir $settings.PepkFilename
+$CredentialsPath = $settings.CredentialsPath
 
 function Find-Java {
     $candidates = @()
@@ -76,10 +75,10 @@ function Find-Java {
 
 function Get-CredentialsFromFile {
     if ($PromptForPassword -or -not (Test-Path $CredentialsPath)) {
-        return @{ Alias = 'blazium'; Password = $null }
+        return @{ Alias = $settings.KeyAlias; Password = $null }
     }
     $content = Get-Content $CredentialsPath -Raw
-    $alias = 'blazium'
+    $alias = $settings.KeyAlias
     $password = $null
     if ($content -match 'ANDROID_KEY_ALIAS=([^\r\n]+)') {
         $alias = $Matches[1].Trim()
@@ -161,7 +160,7 @@ try {
     }
     Write-Host "Encryption public key PEM validated." -ForegroundColor Green
 
-    [void](New-Item -ItemType Directory -Path $BlaziumDir -Force)
+    [void](New-Item -ItemType Directory -Path $SigningDir -Force)
 
     # Remove existing output so PEPK does not fail with FileAlreadyExistsException
     if (Test-Path $OutputPath) {
@@ -238,7 +237,7 @@ try {
     Write-Host "Next step: Upload this zip file to Google Play Console during App Signing enrollment."
     Write-Host "  (Play Console > Your app > Setup > App signing > Upload a key exported from a Java keystore)"
     Write-Host ""
-    Write-Host "Keep .blazium/ secure and never commit it." -ForegroundColor Green
+    Write-Host "Keep $SigningDir secure and never commit it." -ForegroundColor Green
 } catch {
     Write-Error $_
     exit 1

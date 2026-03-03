@@ -2,6 +2,21 @@
 
 This folder helps developers get Android signing requirements in order. **Start with the [Build-Android guide](Build-Android.md)** if you're new—it explains what you need (keystore, password, alias, fingerprint) and how to verify your setup.
 
+## Configuration
+
+All scripts read from **`scripts/settings.json`** (create it if missing; defaults apply). Customize it for your project:
+
+| Key | Description | Default |
+|-----|-------------|---------|
+| `signing_dir` | Directory for keystore and credentials (relative to project root) | `.android-signing` |
+| `keystore_filename` | Keystore file name | `release.keystore` |
+| `credentials_filename` | Credentials file name | `credentials.txt` |
+| `key_alias` | Default key alias for new keystores | `release` |
+| `certificate_dname` | Certificate DN (CN, OU, O, L, ST, C) for new keystores | Generic template |
+| `export.*` | Export script filenames (encrypted_key_filename, etc.) | See settings.json |
+
+**Existing projects:** If you use `.blazium/`, set `"signing_dir": ".blazium"` in settings.json. Add the signing directory to `.gitignore` and never commit it.
+
 ## Before You Build – Quick Checklist
 
 - [ ] Keystore exists and you know its path
@@ -57,9 +72,9 @@ Use `-Force` to overwrite existing keystore and credentials without prompting:
 
 ### Output
 
-All artifacts are written to `.blazium/` (gitignored):
+All artifacts are written to the signing directory (from `settings.json`, default `.android-signing/`):
 
-- `blazium.keystore` – the signing keystore
+- `release.keystore` – the signing keystore (or `keystore_filename` from settings)
 - `credentials.txt` – password and alias (restrict with file permissions)
 
 ### GitHub Secrets (for CI/CD)
@@ -72,15 +87,15 @@ After running the script, add these repository secrets:
 | `ANDROID_KEYSTORE_PASSWORD` | From credentials.txt |
 | `ANDROID_KEYSTORE_BASE64` | Base64 of the keystore file |
 
-To get the base64 value:
+To get the base64 value (replace path with your keystore from settings):
 
 ```powershell
-[Convert]::ToBase64String([IO.File]::ReadAllBytes('.blazium\blazium.keystore'))
+[Convert]::ToBase64String([IO.File]::ReadAllBytes('.android-signing\release.keystore'))
 ```
 
 ### Security
 
-- Never commit `.blazium/` or its contents
+- Never commit the signing directory or its contents (add it to `.gitignore`)
 - Back up the keystore and password securely; loss prevents app updates on Google Play
 - The script uses cryptographically secure random password generation
 
@@ -105,7 +120,7 @@ Exports and encrypts the Android signing key for Google Play App Signing enrollm
 
 ### Prerequisites
 
-- Keystore at `.blazium/blazium.keystore` (or override with `-KeystorePath`)
+- Keystore (path from `settings.json`, or override with `-KeystorePath`)
 - `credentials.txt` from `Generate-AndroidSigningKey.ps1` (for password and alias)
 - `encryption_public_key.pem` from Google Play Console (during App Signing enrollment)
 - **Java** (JDK 8+) via `JAVA_HOME`, `ANDROID_HOME`, or Android Studio's bundled JDK
@@ -119,12 +134,12 @@ From the project root:
 .\scripts\Export-PlayAppSigningKey.ps1
 ```
 
-By default, the script reads `ANDROID_KEY_ALIAS` and `ANDROID_KEYSTORE_PASSWORD` from `.blazium/credentials.txt`. Use `-PromptForPassword` to ignore credentials and prompt interactively instead.
+By default, the script reads `ANDROID_KEY_ALIAS` and `ANDROID_KEYSTORE_PASSWORD` from the credentials file (path from `settings.json`). Use `-PromptForPassword` to ignore credentials and prompt interactively instead.
 
 ### Output
 
 - `encrypted_private_key.zip` – upload this to Google Play Console during App Signing enrollment
-- `pepk.jar` – the PEPK tool (downloaded once, cached in `.blazium/`)
+- `pepk.jar` – the PEPK tool (downloaded once, cached in the signing directory)
 
 ### Optional Parameters
 

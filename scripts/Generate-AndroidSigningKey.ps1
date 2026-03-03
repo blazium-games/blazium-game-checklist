@@ -1,10 +1,11 @@
 #Requires -Version 5.1
 <#
 .SYNOPSIS
-    Generates an Android signing keystore for Blazium's Tabletop Tools.
+    Generates an Android signing keystore for release builds.
 .DESCRIPTION
     Creates a release keystore with a cryptographically secure password.
-    Output: .blazium/ (keystore + credentials). Never commit this folder.
+    Output directory and filenames are configured in scripts/settings.json.
+    Never commit the signing directory.
 .EXAMPLE
     .\Generate-AndroidSigningKey.ps1
 .EXAMPLE
@@ -20,18 +21,17 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-# Resolve project root (parent of scripts/)
-$ProjectRoot = Split-Path -Parent $PSScriptRoot
-$BlaziumDir = Join-Path $ProjectRoot '.blazium'
-$KeystorePath = Join-Path $BlaziumDir 'blazium.keystore'
-$CredentialsPath = Join-Path $BlaziumDir 'credentials.txt'
+. (Join-Path $PSScriptRoot 'AndroidSigningSettings.ps1')
+$settings = Get-AndroidSigningSettings
 
-# Constants
-$KeyAlias = 'blazium'
-$KeyAlg = 'RSA'
-$KeySize = 2048
-$ValidityDays = 10000
-$PasswordLength = 40
+$SigningDir = $settings.SigningDirPath
+$KeystorePath = $settings.KeystorePath
+$CredentialsPath = $settings.CredentialsPath
+$KeyAlias = $settings.KeyAlias
+$KeyAlg = $settings.KeyAlgorithm
+$KeySize = $settings.KeySize
+$ValidityDays = $settings.ValidityDays
+$PasswordLength = $settings.PasswordLength
 
 function Find-Keytool {
     $candidates = @()
@@ -171,10 +171,10 @@ try {
         }
     }
 
-    [void](New-Item -ItemType Directory -Path $BlaziumDir -Force)
+    [void](New-Item -ItemType Directory -Path $SigningDir -Force)
     $password = New-SecurePassword
 
-    $dname = "CN=Blazium's Tabletop Tools, OU=Development, O=Divine Games Inc, L=Unknown, ST=Unknown, C=US"
+    $dname = Get-CertificateDnameString -Dname $settings.CertificateDname
     Write-Host "Creating keystore..." -ForegroundColor Cyan
     & $keytool -genkeypair -v `
         -keystore $KeystorePath `
@@ -209,7 +209,7 @@ try {
     Write-Host "`nOutput written to:"
     Write-Host "  Keystore:  $KeystorePath"
     Write-Host "  Credentials: $CredentialsPath"
-    Write-Host "`nDone. Keep .blazium/ secure and never commit it." -ForegroundColor Green
+    Write-Host "`nDone. Keep $SigningDir secure and never commit it." -ForegroundColor Green
 } catch {
     Write-Error $_
     exit 1

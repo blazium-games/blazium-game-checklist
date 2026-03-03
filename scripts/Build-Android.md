@@ -26,7 +26,7 @@ That's it. Once you have these four pieces of information, you can sign your app
 If you've never published your app to Google Play:
 
 1. **Generate a keystore** using one of these options:
-   - **PowerShell utility:** Run `.\scripts\Generate-AndroidSigningKey.ps1` (creates keystore + credentials file)
+   - **PowerShell utility:** Run `.\scripts\Generate-AndroidSigningKey.ps1` (creates keystore + credentials file). Paths and key alias are configured in `scripts/settings.json`.
    - **Manual:** Use `keytool` from the JDK:
      ```bash
      keytool -genkeypair -v -keystore my-release.keystore -alias mykey -keyalg RSA -keysize 2048 -validity 10000
@@ -35,7 +35,7 @@ If you've never published your app to Google Play:
 
 2. **Store your credentials securely.** Write down the keystore path, password, and alias. Back them up—if you lose them, you cannot update your app on Google Play.
 
-3. **Never commit the keystore or credentials to version control.** Add the keystore path to `.gitignore`.
+3. **Never commit the keystore or credentials to version control.** Add the signing directory to `.gitignore` (default: `.android-signing`; configurable in `scripts/settings.json`).
 
 ### Existing App (Already on Play)
 
@@ -182,4 +182,4 @@ Play Console will prompt you to upload `mapping.txt` and native symbols when you
 | `Get-KeystoreFingerprint.ps1` | Prints your keystore's SHA1 fingerprint for comparison with Play |
 | `Export-PlayAppSigningKey.ps1` | Exports your key for Google Play App Signing enrollment |
 
-These scripts use `.blazium/` by default; you can adapt paths or use them as reference for your own project structure.
+All scripts read from **`scripts/settings.json`** for paths and options (signing directory, keystore filename, key alias, etc.). Edit it to match your project. Default signing directory is `.android-signing`.
